@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Base64;
 
+import com.svalero.sv_burger_android.R;
 import com.svalero.sv_burger_android.api.BurgerApi;
 import com.svalero.sv_burger_android.api.BurgerApiInterface;
 import com.svalero.sv_burger_android.contract.RegisterBurgerContract;
@@ -30,12 +31,11 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
         this.api = BurgerApi.buildInstance();
     }
 
-    // --- AÑADIR (POST) ---
     @Override
     public void addBurger(String name, String ingredients, String priceStr, boolean isVegan, long foodTruckId, Uri imageUri, Context context) {
 
         if (name.isEmpty() || ingredients.isEmpty() || priceStr.isEmpty()) {
-            view.showError("Por favor, rellena todos los campos");
+            view.showError(context.getString(R.string.error_fill_fields)); // Traducción
             return;
         }
 
@@ -43,19 +43,15 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
         try {
             price = Float.parseFloat(priceStr);
         } catch (NumberFormatException e) {
-            view.showError("El precio no es válido");
+            view.showError(context.getString(R.string.error_invalid_price)); // Traducción
             return;
         }
 
-        // 1. Obtenemos los bytes de la imagen
         byte[] imageBytes = null;
         if (imageUri != null) {
             imageBytes = convertUriToBytes(imageUri, context);
         }
 
-        // 2. CONVERSIÓN EXTRA PARA "ADD":
-        // Como BurgerInDto (Crear) espera un String, convertimos los bytes a Base64 aquí.
-        // Así no rompemos lo que ya funcionaba.
         String base64Image = null;
         if (imageBytes != null) {
             base64Image = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
@@ -67,7 +63,7 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
                 price,
                 isVegan,
                 foodTruckId,
-                base64Image // <--- Aquí pasamos String
+                base64Image
         );
 
         Call<Burger> call = api.addBurger(burgerData);
@@ -75,24 +71,24 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
             @Override
             public void onResponse(Call<Burger> call, Response<Burger> response) {
                 if (response.isSuccessful()) {
-                    view.showSuccess("¡Hamburguesa creada con éxito! 🍔");
+                    view.showSuccess(context.getString(R.string.success_create)); // Traducción
                 } else {
-                    view.showError("Error al guardar: " + response.code());
+                    // Usamos un formato para el código de error
+                    view.showError(context.getString(R.string.error_save_code, response.code()));
                 }
             }
 
             @Override
             public void onFailure(Call<Burger> call, Throwable t) {
-                view.showError("Fallo de conexión: " + t.getMessage());
+                view.showError(context.getString(R.string.error_network_msg, t.getMessage())); // Traducción
             }
         });
     }
 
-    // --- EDITAR (PUT) ---
     @Override
     public void editBurger(long burgerId, String name, String ingredients, String priceStr, boolean isVegan, Uri imageUri, Context context) {
         if (name.isEmpty() || ingredients.isEmpty() || priceStr.isEmpty()) {
-            view.showError("Rellena todos los campos");
+            view.showError(context.getString(R.string.error_fill_fields)); // Traducción
             return;
         }
 
@@ -100,32 +96,21 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
         try {
             price = Float.parseFloat(priceStr);
         } catch (NumberFormatException e) {
-            view.showError("El precio no es válido");
+            view.showError(context.getString(R.string.error_invalid_price)); // Traducción
             return;
         }
 
-        // 1. Obtenemos los bytes de la imagen
         byte[] imageBytes = null;
         if (imageUri != null) {
-            System.out.println("📸 PRESENTER: Hay una nueva imagen seleccionada: " + imageUri.toString());
-            // Aquí obtenemos el array de bytes puro
             imageBytes = convertUriToBytes(imageUri, context);
-
-            if (imageBytes != null) {
-                System.out.println("📸 PRESENTER: Bytes obtenidos. Tamaño: " + imageBytes.length);
-            } else {
-                System.out.println("⚠️ PRESENTER: Error al leer la imagen (es null)");
-            }
         }
 
-        // 2. CREAMOS EL DTO CON BYTES
-        // Asegúrate de que BurgerUpdateDto acepta 'byte[]' en el constructor
         BurgerUpdateDto updateData = new BurgerUpdateDto(
                 name,
                 ingredients,
                 price,
                 isVegan,
-                imageBytes // <--- Aquí pasamos byte[] directamente
+                imageBytes
         );
 
         Call<Burger> call = api.updateBurger(burgerId, updateData);
@@ -133,34 +118,27 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
             @Override
             public void onResponse(Call<Burger> call, Response<Burger> response) {
                 if (response.isSuccessful()) {
-                    view.showSuccess("Hamburguesa actualizada correctamente ✨");
+                    view.showSuccess(context.getString(R.string.success_update)); // Traducción
                 } else {
-                    view.showError("Error al actualizar: " + response.code());
+                    view.showError(context.getString(R.string.error_update_code, response.code()));
                 }
             }
 
             @Override
             public void onFailure(Call<Burger> call, Throwable t) {
-                view.showError("Fallo de red: " + t.getMessage());
+                view.showError(context.getString(R.string.error_network_msg, t.getMessage())); // Traducción
             }
         });
     }
 
-    // --- MÉTODO MODIFICADO: Devuelve byte[] en vez de String ---
     private byte[] convertUriToBytes(Uri imageUri, Context context) {
         try {
             InputStream inputStream = context.getContentResolver().openInputStream(imageUri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-            // Redimensionar para no enviar 5MB
             bitmap = getResizedBitmap(bitmap, 800);
-
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
-
-            // DEVOLVEMOS EL ARRAY DE BYTES DIRECTAMENTE
             return byteArrayOutputStream.toByteArray();
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;

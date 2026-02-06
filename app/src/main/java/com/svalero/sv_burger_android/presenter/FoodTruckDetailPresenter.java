@@ -1,5 +1,8 @@
 package com.svalero.sv_burger_android.presenter;
 
+import android.content.Context;
+
+import com.svalero.sv_burger_android.R;
 import com.svalero.sv_burger_android.contract.FoodTruckDetailContract;
 import com.svalero.sv_burger_android.domain.FoodTruck;
 import com.svalero.sv_burger_android.model.FoodTruckDetailModel;
@@ -8,9 +11,12 @@ public class FoodTruckDetailPresenter implements FoodTruckDetailContract.Present
 
     private FoodTruckDetailContract.View view;
     private FoodTruckDetailContract.Model model;
+    private Context context;
 
-    public FoodTruckDetailPresenter(FoodTruckDetailContract.View view) {
+    // Actualizamos el constructor
+    public FoodTruckDetailPresenter(FoodTruckDetailContract.View view, Context context) {
         this.view = view;
+        this.context = context;
         this.model = new FoodTruckDetailModel();
     }
 
@@ -26,7 +32,8 @@ public class FoodTruckDetailPresenter implements FoodTruckDetailContract.Present
 
     @Override
     public void onDeleteSuccess() {
-        view.showSuccessMessage("FoodTruck eliminado");
+        // --- CAMBIO: Mensaje traducido desde strings.xml ---
+        view.showSuccessMessage(context.getString(R.string.success_delete_truck));
     }
 
     @Override

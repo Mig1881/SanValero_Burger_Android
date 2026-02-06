@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descripción:"
+                android:text="@string/label_description"
                 android:textColor="@color/sv_gold"
                 android:textStyle="bold"/>
 
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contacto:"
+                android:text="@string/label_contact"
                 android:textColor="@color/sv_gold"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"/>
@@ -101,7 +101,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="Añadir Burger"
+        android:contentDescription="@string/desc_add_burger"
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="@color/sv_gold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayoutButtons"
@@ -120,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="EDITAR"
+            android:text="@string/btn_edit"
             android:textColor="@color/black"
             android:backgroundTint="@color/sv_gold"
             android:layout_marginEnd="8dp"/>
@@ -130,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="BORRAR"
+            android:text="@string/btn_delete"
             android:textColor="@color/white"
             android:backgroundTint="#D32F2F"
             android:layout_marginStart="8dp"/>

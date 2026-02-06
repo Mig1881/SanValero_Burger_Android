@@ -5,11 +5,11 @@
     <item
         android:id="@+id/action_burgers"
         android:icon="@drawable/ic_burger"
-        android:title="Burgers"
+        android:title="@string/action_view_burgers"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_add_foodtruck"
         android:icon="@drawable/ic_add"
-        android:title="Add FoodTruck"
+        android:title="@string/action_add_truck"
         app:showAsAction="always" />
 </menu>

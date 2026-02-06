@@ -16,7 +16,7 @@
             android:id="@+id/tvScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nueva Hamburguesa"
+            android:text="@string/title_new_burger"
             android:textColor="@color/sv_gold"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toca para elegir foto"
+                android:text="@string/label_tap_photo"
                 android:textColor="@color/white"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="16dp"
@@ -54,7 +54,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre"
+            android:text="@string/label_name"
             android:textColor="@color/sv_gold"
             android:textStyle="bold"/>
 
@@ -62,7 +62,7 @@
             android:id="@+id/etBurgerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ej: La Bestial"
+            android:hint="@string/hint_name"
             android:textColor="@color/white"
             android:textColorHint="@color/sv_text_secondary"
             android:backgroundTint="@color/white"
@@ -72,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingredientes"
+            android:text="@string/label_ingredients"
             android:textColor="@color/sv_gold"
             android:textStyle="bold"/>
 
@@ -80,7 +80,7 @@
             android:id="@+id/etBurgerIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ej: Carne, queso, bacon..."
+            android:hint="@string/hint_ingredients"
             android:textColor="@color/white"
             android:textColorHint="@color/sv_text_secondary"
             android:backgroundTint="@color/white"
@@ -103,7 +103,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Precio (€)"
+                    android:text="@string/label_price_symbol"
                     android:textColor="@color/sv_gold"
                     android:textStyle="bold"/>
 
@@ -122,7 +122,7 @@
                 android:id="@+id/cbVegan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vegana 🌱"
+                android:text="@string/label_vegan"
                 android:textColor="@color/white"
                 android:buttonTint="@color/sv_gold"
                 android:layout_marginStart="16dp"/>
@@ -132,7 +132,7 @@
             android:id="@+id/btnSaveBurger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GUARDAR HAMBURGUESA"
+            android:text="@string/btn_save_burger"
             android:backgroundTint="@color/sv_gold"
             android:textColor="@color/black"
             android:textStyle="bold"

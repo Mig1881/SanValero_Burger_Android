@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/sv_gold"
         app:titleTextColor="@color/black"
-        app:title="Detalle Hamburguesa" />
+        app:title="@string/title_detail_burger" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                     android:id="@+id/tvDetailVegan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🌱 VEGANA"
+                    android:text="@string/label_vegan"
                     android:background="@drawable/ic_launcher_background"
                     android:backgroundTint="#4CAF50"
                     android:paddingHorizontal="12dp"
@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ingredientes:"
+                    android:text="@string/label_ingredients"
                     android:textColor="@color/sv_text_secondary"
                     android:layout_marginTop="24dp"
                     android:textStyle="bold"/>
@@ -123,7 +123,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="EDITAR"
+                    android:text="@string/btn_edit"
                     android:backgroundTint="@color/sv_gold"
                     android:textColor="@color/black"
                     android:layout_marginEnd="8dp"/>
@@ -133,7 +133,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="BORRAR"
+                    android:text="@string/btn_delete"
                     android:backgroundTint="#D32F2F"
                     android:textColor="@color/white"
                     android:layout_marginStart="8dp"/>
