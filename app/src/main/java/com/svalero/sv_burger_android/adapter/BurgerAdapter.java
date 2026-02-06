@@ -35,18 +35,21 @@ public class BurgerAdapter extends RecyclerView.Adapter<BurgerAdapter.BurgerView
 
     @Override
     public void onBindViewHolder(@NonNull BurgerViewHolder holder, int position) {
-        // 1. Recuperamos la hamburguesa de esta posición
         Burger burger = burgerList.get(position);
 
-        // 2. Pintamos los datos
         holder.tvName.setText(burger.getNombre());
         holder.tvIngredients.setText(burger.getIngredientes());
 
-        // Formateamos el precio para que quede bonito
+        if (burger.getFoodTruck() != null) {
+            holder.tvFoodTruck.setText("🚚 " + burger.getFoodTruck().getNombre());
+            holder.tvFoodTruck.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvFoodTruck.setVisibility(View.GONE);
+        }
+
         String precioFormateado = String.format("%.2f €", burger.getPrecio());
         holder.tvPrice.setText(precioFormateado);
 
-        // 3. Lógica de la imagen (mantengo la tuya que está perfecta)
         String imageUrl = burger.getImagenURL();
         if (imageUrl != null && !imageUrl.startsWith("http")) {
             imageUrl = "http://10.0.2.2:8080" + imageUrl;
@@ -60,13 +63,10 @@ public class BurgerAdapter extends RecyclerView.Adapter<BurgerAdapter.BurgerView
                 .error(R.drawable.ic_burger)
                 .into(holder.ivImage);
 
-        // --- 4. NUEVO: CLICK PARA IR AL DETALLE ---
         holder.itemView.setOnClickListener(v -> {
-            // Obtenemos el contexto desde la vista para poder lanzar el Intent
             Context context = holder.itemView.getContext();
-
             Intent intent = new Intent(context, BurgerDetailView.class);
-            intent.putExtra("burger_id", burger.getId()); // ¡Pasamos el ID clave!
+            intent.putExtra("burger_id", burger.getId());
             context.startActivity(intent);
         });
     }
@@ -76,11 +76,14 @@ public class BurgerAdapter extends RecyclerView.Adapter<BurgerAdapter.BurgerView
 
     static class BurgerViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvIngredients, tvPrice;
+        TextView tvFoodTruck;
         ImageView ivImage;
 
         public BurgerViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvBurgerName);
+            // Referenciamos el nuevo ID del XML
+            tvFoodTruck = itemView.findViewById(R.id.tvFoodTruckName);
             tvIngredients = itemView.findViewById(R.id.tvBurgerIngredients);
             tvPrice = itemView.findViewById(R.id.tvBurgerPrice);
             ivImage = itemView.findViewById(R.id.ivBurgerImage);

@@ -23,7 +23,6 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
     private CheckBox cbDelivery;
     private Button btnSave;
 
-    // Variables para controlar Edición
     private boolean isEditMode = false;
     private long foodTruckId;
 
@@ -32,7 +31,6 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_food_truck);
 
-        // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -40,7 +38,6 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
             getSupportActionBar().setTitle("Nuevo FoodTruck");
         }
 
-        // Referencias
         etName = findViewById(R.id.etName);
         etDesc = findViewById(R.id.etDescription);
         etPhone = findViewById(R.id.etPhone);
@@ -51,16 +48,13 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
 
         presenter = new RegisterFoodTruckPresenter(this);
 
-        // --- COMPROBAR SI ES EDICIÓN ---
         if (getIntent().hasExtra("id")) {
             isEditMode = true;
             foodTruckId = getIntent().getLongExtra("id", 0);
 
-            // Cambiar título y botón
             if (getSupportActionBar() != null) getSupportActionBar().setTitle("Editar FoodTruck");
             btnSave.setText("GUARDAR CAMBIOS");
 
-            // Rellenar campos
             etName.setText(getIntent().getStringExtra("name"));
             etDesc.setText(getIntent().getStringExtra("description"));
             etPhone.setText(getIntent().getStringExtra("phone"));
@@ -115,7 +109,6 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault());
             foodTruck.setFechaInscripcion(sdf.format(new java.util.Date()));
         }
-        // --- DEBUG: MIRA EL LOGCAT SI SIGUE FALLANDO ---
         android.util.Log.d("FoodTruckApp", "Enviando Valoracion: " + rating);
 
 
@@ -130,7 +123,7 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
     @Override
     public void showSuccessMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        finish(); // Volver atrás
+        finish();
     }
 
     @Override

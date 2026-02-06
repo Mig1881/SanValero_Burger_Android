@@ -5,30 +5,28 @@ import com.svalero.sv_burger_android.domain.Burger;
 import com.svalero.sv_burger_android.model.BurgerDetailModel;
 
 public class BurgerDetailPresenter implements BurgerDetailContract.Presenter,
-        BurgerDetailContract.Model.OnLoadBurgerListener, // Implementamos los listeners aquí
+        BurgerDetailContract.Model.OnLoadBurgerListener,
         BurgerDetailContract.Model.OnDeleteBurgerListener {
 
     private BurgerDetailContract.View view;
-    private BurgerDetailContract.Model model; // Referencia al modelo
+    private BurgerDetailContract.Model model;
 
     public BurgerDetailPresenter(BurgerDetailContract.View view) {
         this.view = view;
-        this.model = new BurgerDetailModel(); // Inicializamos el modelo
+        this.model = new BurgerDetailModel();
     }
 
     // --- Métodos que llama la Vista ---
 
     @Override
     public void loadBurger(long id) {
-        model.loadBurger(id, this); // Le pasamos 'this' como listener
+        model.loadBurger(id, this);
     }
 
     @Override
     public void deleteBurger(long id) {
         model.deleteBurger(id, this);
     }
-
-    // --- Respuestas del Modelo (Callbacks) ---
 
     @Override
     public void onLoadSuccess(Burger burger) {

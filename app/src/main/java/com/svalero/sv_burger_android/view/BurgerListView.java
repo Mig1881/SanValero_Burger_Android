@@ -28,10 +28,8 @@ public class BurgerListView extends AppCompatActivity implements BurgerListContr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Asegúrate de que este layout tiene el RecyclerView y el Toolbar
         setContentView(R.layout.activity_main);
 
-        // 1. Configurar Toolbar con flecha atrás
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -39,28 +37,20 @@ public class BurgerListView extends AppCompatActivity implements BurgerListContr
             getSupportActionBar().setTitle("Nuestras Burgers");
         }
 
-        // 2. Inicializar Presenter y Lista
         presenter = new BurgerListPresenter(this);
         burgerList = new ArrayList<>();
 
-        // 3. Configurar RecyclerView
-        // IMPORTANTE: Verifica que en tu XML el ID sea 'rvFoodTrucks' o 'rvBurgers'
         RecyclerView recyclerView = findViewById(R.id.rvFoodTrucks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new BurgerAdapter(burgerList);
         recyclerView.setAdapter(adapter);
 
-        // NOTA: Hemos quitado presenter.loadBurgers() de aquí.
-        // Lo ponemos en onResume para que refresque al volver.
     }
 
-    // --- NUEVO: RECARGA AUTOMÁTICA ---
     @Override
     protected void onResume() {
         super.onResume();
-        // Llamamos a la API cada vez que la pantalla se hace visible
-        // Esto refrescará la lista si has borrado algo en la pantalla de detalle
         presenter.loadBurgers();
     }
     // ---------------------------------
@@ -77,11 +67,10 @@ public class BurgerListView extends AppCompatActivity implements BurgerListContr
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // Gestionar el click en la flecha de atrás de la barra superior
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish(); // Cierra esta actividad y vuelve a la anterior
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

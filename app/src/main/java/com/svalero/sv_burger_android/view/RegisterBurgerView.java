@@ -29,7 +29,6 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
     private RegisterBurgerContract.Presenter presenter;
     private Uri selectedImageUri;
 
-    // Variables para controlar el modo
     private boolean isEditMode = false;
     private long burgerIdToEdit = -1;
     private long foodTruckId = -1;
@@ -54,15 +53,12 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
         presenter = new RegisterBurgerPresenter(this);
         initViews();
 
-        //COMPROBAR MODO: ¿Crear o a Editar?
         burgerIdToEdit = getIntent().getLongExtra("edit_burger_id", -1);
 
         if (burgerIdToEdit != -1) {
-            // --- MODO EDICIÓN ---
             isEditMode = true;
             setupEditMode();
         } else {
-            // --- MODO CREACIÓN ---
             isEditMode = false;
             foodTruckId = getIntent().getLongExtra("food_truck_id", -1);
             if (foodTruckId == -1) {
@@ -71,10 +67,8 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
             }
         }
 
-        // 2. CONFIGURAR BOTÓN
         btnSave.setOnClickListener(v -> {
             if (isEditMode) {
-                // LLAMAR A EDITAR
                 presenter.editBurger(
                         burgerIdToEdit,
                         etName.getText().toString(),
@@ -85,7 +79,6 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
                         this
                 );
             } else {
-                // LLAMAR A CREAR
                 presenter.addBurger(
                         etName.getText().toString(),
                         etIngredients.getText().toString(),
@@ -130,7 +123,6 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
         etPrice.setText(String.valueOf(price));
         cbVegan.setChecked(vegan);
 
-        // Carga la imagen antigua para que el usuario sepa cuál hay
         if (currentImageUrl != null && !currentImageUrl.isEmpty()) {
             String fullUrl = "http://10.0.2.2:8080" + currentImageUrl;
 

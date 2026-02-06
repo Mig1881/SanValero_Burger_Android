@@ -25,7 +25,6 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
     private BurgerDetailPresenter presenter;
     private long burgerId;
 
-    // Variable para guardar la hamburguesa cargada y poder pasarla al editar
     private Burger currentBurger;
 
     @Override
@@ -40,7 +39,6 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        // Recoger ID de la lista
         burgerId = getIntent().getLongExtra("burger_id", -1);
         if (burgerId == -1) {
             finish();
@@ -49,10 +47,8 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
 
         initViews();
         presenter = new BurgerDetailPresenter(this);
-        // La carga inicial se hará en onResume
     }
 
-    // --- NUEVO: Refrescar datos al volver de editar ---
     @Override
     protected void onResume() {
         super.onResume();
@@ -81,12 +77,10 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
                     .show();
         });
 
-        // --- NUEVO: Configurar Botón Editar ---
         btnEdit.setOnClickListener(v -> {
-            if (currentBurger == null) return; // Seguridad por si aún no ha cargado
+            if (currentBurger == null) return;
 
             Intent intent = new Intent(this, RegisterBurgerView.class);
-            // PASAMOS EL MODO "EDITAR" Y LOS DATOS
             intent.putExtra("edit_burger_id", currentBurger.getId());
             intent.putExtra("edit_name", currentBurger.getNombre());
             intent.putExtra("edit_ingredients", currentBurger.getIngredientes());
@@ -100,25 +94,23 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
 
     @Override
     public void showBurgerDetail(Burger burger) {
-        this.currentBurger = burger; // Guardamos la burger actual
+        this.currentBurger = burger;
 
         tvName.setText(burger.getNombre());
         tvPrice.setText(burger.getPrecio() + " €");
         tvIngredients.setText(burger.getIngredientes());
         tvDate.setText("Alta: " + burger.getFechaCreacion());
 
-        // Mostrar etiqueta Vegana si corresponde
+
         if (burger.isOpcionVegana()) {
             tvVegan.setVisibility(View.VISIBLE);
         } else {
             tvVegan.setVisibility(View.GONE);
         }
 
-        // Cargar Imagen
         if (burger.getImagenURL() != null && !burger.getImagenURL().isEmpty()) {
             String fullUrl = "http://10.0.2.2:8080" + burger.getImagenURL();
 
-            // Quitamos tinte gris por si acaso
             ivImage.setColorFilter(null);
 
             Glide.with(this)
@@ -140,7 +132,7 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
     @Override
     public void showSuccessMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        finish(); // Volver a la lista tras borrar
+        finish();
     }
 
     @Override
