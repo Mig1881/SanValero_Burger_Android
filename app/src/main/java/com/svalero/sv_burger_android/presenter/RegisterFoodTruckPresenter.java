@@ -11,9 +11,8 @@ public class RegisterFoodTruckPresenter implements RegisterFoodTruckContract.Pre
 
     private RegisterFoodTruckContract.View view;
     private RegisterFoodTruckContract.Model model;
-    private Context context; // <--- Referencia al contexto
+    private Context context;
 
-    // Actualizamos el constructor para recibir el contexto
     public RegisterFoodTruckPresenter(RegisterFoodTruckContract.View view, Context context) {
         this.view = view;
         this.context = context;
@@ -23,7 +22,6 @@ public class RegisterFoodTruckPresenter implements RegisterFoodTruckContract.Pre
     @Override
     public void registerFoodTruck(FoodTruck foodTruck) {
         if (foodTruck.getNombre().isEmpty()) {
-            // Usamos el recurso de nombre obligatorio
             view.showErrorMessage(context.getString(R.string.error_name_required));
             return;
         }
@@ -33,7 +31,6 @@ public class RegisterFoodTruckPresenter implements RegisterFoodTruckContract.Pre
     @Override
     public void modifyFoodTruck(long id, FoodTruck foodTruck) {
         if (foodTruck.getNombre().isEmpty()) {
-            // Usamos el recurso de nombre obligatorio
             view.showErrorMessage(context.getString(R.string.error_name_required));
             return;
         }
@@ -42,7 +39,6 @@ public class RegisterFoodTruckPresenter implements RegisterFoodTruckContract.Pre
 
     @Override
     public void onSuccess(FoodTruck foodTruck) {
-        // Mensaje genérico de éxito traducido
         view.showSuccessMessage(context.getString(R.string.success_operation));
     }
 

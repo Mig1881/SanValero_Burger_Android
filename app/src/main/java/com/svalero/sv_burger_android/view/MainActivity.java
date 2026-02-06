@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements FoodTruckListCont
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            // No establecemos título aquí porque el XML ya tiene el TextView con @string/app_name
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
@@ -85,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements FoodTruckListCont
 
     @Override
     public void showErrorMessage(String message) {
-        // Al igual que en las otras vistas, si el error viene del Presenter
-        // ya procesado con getString(R.string...), aquí solo lo mostramos.
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -67,11 +67,10 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
         btnEdit = findViewById(R.id.btnDetailEdit);
         btnDelete = findViewById(R.id.btnDetailDelete);
 
-        // Configurar Botón Borrar con recursos de cadena
         btnDelete.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.dialog_delete_title) // Referencia a strings.xml
-                    .setMessage(R.string.dialog_delete_msg) // Referencia a strings.xml
+                    .setTitle(R.string.dialog_delete_title)
+                    .setMessage(R.string.dialog_delete_msg)
                     .setPositiveButton(R.string.btn_confirm_delete, (dialog, which) -> presenter.deleteBurger(burgerId))
                     .setNegativeButton(R.string.btn_cancel, null)
                     .show();
@@ -132,8 +131,6 @@ public class BurgerDetailView extends AppCompatActivity implements BurgerDetailC
 
     @Override
     public void showSuccessMessage(String message) {
-        // El mensaje ya viene traducido del Presenter si lo manejas ahí,
-        // o puedes usar Toast.makeText(this, R.string.success_delete, Toast.LENGTH_SHORT).show();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         finish();
     }
