@@ -43,7 +43,6 @@ public class BurgerDetailPresenter implements BurgerDetailContract.Presenter,
 
     @Override
     public void onDeleteSuccess() {
-        // --- CAMBIO: Obtenemos el mensaje traducido del strings.xml ---
         String successMsg = context.getString(R.string.success_delete);
         view.showSuccessMessage(successMsg);
     }

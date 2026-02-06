@@ -13,10 +13,8 @@ public class BurgerUpdateDto {
     @SerializedName("opcionVegana")
     private boolean opcionVegana;
 
-    // --- CAMBIO RADICAL: Usamos byte[] directamente ---
     @SerializedName("imagen")
     private byte[] imagen;
-    // --------------------------------------------------
 
     public BurgerUpdateDto(String nombre, String ingredientes, float precio, boolean opcionVegana, byte[] imagen) {
         this.nombre = nombre;

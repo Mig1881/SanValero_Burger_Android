@@ -62,7 +62,6 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
             isEditMode = false;
             foodTruckId = getIntent().getLongExtra("food_truck_id", -1);
             if (foodTruckId == -1) {
-                // USAMOS RECURSO PARA EL ERROR DE ID
                 Toast.makeText(this, R.string.error_missing_id, Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -106,7 +105,6 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
     }
 
     private void setupEditMode() {
-        // CAMBIAMOS TEXTOS VISUALES USANDO STRINGS
         btnSave.setText(R.string.btn_update_burger);
         if (tvTitle != null) {
             tvTitle.setText(R.string.title_edit_burger);

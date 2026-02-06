@@ -6,8 +6,6 @@ public class BurgerInDto {
     private float precio;
     private boolean opcionVegana;
     private long foodTruckId;
-    // OJO: En Spring Boot es byte[], pero en JSON viaja como String (Base64).
-    // Spring Boot lo convierte automáticamente.
     private String imagen;
 
     public BurgerInDto() {}

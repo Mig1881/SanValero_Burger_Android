@@ -35,7 +35,6 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            // Título por defecto (Modo Creación)
             getSupportActionBar().setTitle(R.string.title_new_foodtruck);
         }
 
@@ -104,7 +103,6 @@ public class RegisterFoodTruckView extends AppCompatActivity implements Register
         foodTruck.setValoracion(rating);
         foodTruck.setOpcionEnvios(cbDelivery.isChecked());
 
-        // Fecha de inscripción (Interna, no requiere traducción)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             foodTruck.setFechaInscripcion(java.time.LocalDate.now().toString());
         } else {

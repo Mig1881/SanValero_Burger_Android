@@ -35,7 +35,7 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
     public void addBurger(String name, String ingredients, String priceStr, boolean isVegan, long foodTruckId, Uri imageUri, Context context) {
 
         if (name.isEmpty() || ingredients.isEmpty() || priceStr.isEmpty()) {
-            view.showError(context.getString(R.string.error_fill_fields)); // Traducción
+            view.showError(context.getString(R.string.error_fill_fields));
             return;
         }
 
@@ -43,7 +43,7 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
         try {
             price = Float.parseFloat(priceStr);
         } catch (NumberFormatException e) {
-            view.showError(context.getString(R.string.error_invalid_price)); // Traducción
+            view.showError(context.getString(R.string.error_invalid_price));
             return;
         }
 
@@ -71,16 +71,15 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
             @Override
             public void onResponse(Call<Burger> call, Response<Burger> response) {
                 if (response.isSuccessful()) {
-                    view.showSuccess(context.getString(R.string.success_create)); // Traducción
+                    view.showSuccess(context.getString(R.string.success_create));
                 } else {
-                    // Usamos un formato para el código de error
                     view.showError(context.getString(R.string.error_save_code, response.code()));
                 }
             }
 
             @Override
             public void onFailure(Call<Burger> call, Throwable t) {
-                view.showError(context.getString(R.string.error_network_msg, t.getMessage())); // Traducción
+                view.showError(context.getString(R.string.error_network_msg, t.getMessage()));
             }
         });
     }
@@ -88,7 +87,7 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
     @Override
     public void editBurger(long burgerId, String name, String ingredients, String priceStr, boolean isVegan, Uri imageUri, Context context) {
         if (name.isEmpty() || ingredients.isEmpty() || priceStr.isEmpty()) {
-            view.showError(context.getString(R.string.error_fill_fields)); // Traducción
+            view.showError(context.getString(R.string.error_fill_fields));
             return;
         }
 
@@ -96,7 +95,7 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
         try {
             price = Float.parseFloat(priceStr);
         } catch (NumberFormatException e) {
-            view.showError(context.getString(R.string.error_invalid_price)); // Traducción
+            view.showError(context.getString(R.string.error_invalid_price));
             return;
         }
 
@@ -118,7 +117,7 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
             @Override
             public void onResponse(Call<Burger> call, Response<Burger> response) {
                 if (response.isSuccessful()) {
-                    view.showSuccess(context.getString(R.string.success_update)); // Traducción
+                    view.showSuccess(context.getString(R.string.success_update));
                 } else {
                     view.showError(context.getString(R.string.error_update_code, response.code()));
                 }
@@ -126,7 +125,7 @@ public class RegisterBurgerPresenter implements RegisterBurgerContract.Presenter
 
             @Override
             public void onFailure(Call<Burger> call, Throwable t) {
-                view.showError(context.getString(R.string.error_network_msg, t.getMessage())); // Traducción
+                view.showError(context.getString(R.string.error_network_msg, t.getMessage()));
             }
         });
     }

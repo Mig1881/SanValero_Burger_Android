@@ -13,7 +13,6 @@ public class FoodTruckDetailPresenter implements FoodTruckDetailContract.Present
     private FoodTruckDetailContract.Model model;
     private Context context;
 
-    // Actualizamos el constructor
     public FoodTruckDetailPresenter(FoodTruckDetailContract.View view, Context context) {
         this.view = view;
         this.context = context;
@@ -32,7 +31,6 @@ public class FoodTruckDetailPresenter implements FoodTruckDetailContract.Present
 
     @Override
     public void onDeleteSuccess() {
-        // --- CAMBIO: Mensaje traducido desde strings.xml ---
         view.showSuccessMessage(context.getString(R.string.success_delete_truck));
     }
 
