@@ -23,7 +23,6 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
     private FoodTruckDetailPresenter presenter;
     private long foodTruckId;
 
-    // Declaramos los TextViews aquí arriba para poder usarlos en todo el archivo
     private TextView tvName;
     private TextView tvDescription;
     private TextView tvPhone;
@@ -32,45 +31,38 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
     private boolean currentDeliveryOption = false;
     private FloatingActionButton fabAddBurger;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_truck_detail);
 
-        // 1. Configurar Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Detalle FoodTruck");
+            getSupportActionBar().setTitle(R.string.title_food_truck_detail);
         }
 
-        presenter = new FoodTruckDetailPresenter(this);
+        presenter = new FoodTruckDetailPresenter(this, this);
 
-        // 2. Recoger ID del Intent
         Intent intent = getIntent();
-        foodTruckId = intent.getLongExtra("id", 0); // ¡ESTE DATO ES CLAVE!
+        foodTruckId = intent.getLongExtra("id", 0);
 
-        // 3. Inicializar las Vistas
         tvName = findViewById(R.id.tvDetailName);
         tvDescription = findViewById(R.id.tvDetailDescription);
         tvPhone = findViewById(R.id.tvDetailPhone);
         tvEmail = findViewById(R.id.tvDetailEmail);
         tvRating = findViewById(R.id.tvDetailRating);
 
-        // 4. Pintar datos iniciales
         tvName.setText(intent.getStringExtra("name"));
         tvDescription.setText(intent.getStringExtra("description"));
-        tvPhone.setText("📞 " + intent.getStringExtra("phone"));
-        tvEmail.setText("📧 " + intent.getStringExtra("email"));
-        tvRating.setText("⭐ " + intent.getFloatExtra("rating", 0));
+        tvPhone.setText(getString(R.string.fmt_phone_icon, intent.getStringExtra("phone")));
+        tvEmail.setText(getString(R.string.fmt_email_icon, intent.getStringExtra("email")));
+        tvRating.setText(getString(R.string.fmt_rating_icon, intent.getFloatExtra("rating", 0)));
 
-        // 5. Botón Borrar
         Button btnDelete = findViewById(R.id.btnDelete);
         btnDelete.setOnClickListener(v -> showDeleteConfirmation());
 
-        // 6. Botón Editar
         Button btnEdit = findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(v -> {
             Intent editIntent = new Intent(this, RegisterFoodTruckView.class);
@@ -78,16 +70,17 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
             editIntent.putExtra("name", tvName.getText().toString());
             editIntent.putExtra("description", tvDescription.getText().toString());
 
-            String phoneClean = tvPhone.getText().toString().replace("📞 ", "");
-            String emailClean = tvEmail.getText().toString().replace("📧 ", "");
-            String ratingClean = tvRating.getText().toString().replace("⭐ ", "");
+            String phoneIcon = getString(R.string.phone_icon);
+            String emailIcon = getString(R.string.email_icon);
+            String ratingIcon = getString(R.string.rating_icon);
 
-            editIntent.putExtra("phone", phoneClean);
-            editIntent.putExtra("email", emailClean);
+            editIntent.putExtra("phone", tvPhone.getText().toString().replace(phoneIcon + " ", ""));
+            editIntent.putExtra("email", tvEmail.getText().toString().replace(emailIcon + " ", ""));
 
+            String ratingClean = tvRating.getText().toString().replace(ratingIcon + " ", "");
             try {
-                editIntent.putExtra("rating", Float.parseFloat(ratingClean));
-            } catch (NumberFormatException | NullPointerException e) {
+                editIntent.putExtra("rating", Float.parseFloat(ratingClean.replace(",", ".")));
+            } catch (Exception e) {
                 editIntent.putExtra("rating", 0f);
             }
 
@@ -97,48 +90,37 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
 
         fabAddBurger = findViewById(R.id.fabAddBurger);
         fabAddBurger.setOnClickListener(v -> {
-            // Saltamos a la pantalla de crear Burger
-            Intent addBurgerIntent = new Intent(FoodTruckDetailView.this, RegisterBurgerView.class);
-            // ¡IMPORTANTE! Nos llevamos el ID del Food Truck para saber "quién es el padre"
+            Intent addBurgerIntent = new Intent(this, RegisterBurgerView.class);
             addBurgerIntent.putExtra("food_truck_id", foodTruckId);
             startActivity(addBurgerIntent);
         });
     }
 
-    // --- MÉTODOS DEL CICLO DE VIDA ---
-
     @Override
     protected void onResume() {
         super.onResume();
-        // ESTA ES LA CLAVE: Al volver de editar, pedimos los datos nuevos
         presenter.loadFoodTruck(foodTruckId);
     }
 
-    // --- MÉTODOS DEL CONTRATO (View) ---
-
     @Override
     public void showFoodTruck(FoodTruck foodTruck) {
-        // Aquí actualizamos la pantalla con lo que viene fresco de la API
         tvName.setText(foodTruck.getNombre());
         tvDescription.setText(foodTruck.getDescripcion());
-        tvPhone.setText("📞 " + foodTruck.getTelefono());
-        tvEmail.setText("📧 " + foodTruck.getEmail());
+        tvPhone.setText(getString(R.string.fmt_phone_icon, foodTruck.getTelefono()));
+        tvEmail.setText(getString(R.string.fmt_email_icon, foodTruck.getEmail()));
 
-        if (foodTruck.getValoracion() != null) {
-            tvRating.setText("⭐ " + foodTruck.getValoracion());
-        } else {
-            tvRating.setText("⭐ 0.0");
-        }
+        float ratingValue = (foodTruck.getValoracion() != null) ? foodTruck.getValoracion() : 0.0f;
+        tvRating.setText(getString(R.string.fmt_rating_icon, ratingValue));
+
         if (foodTruck.getOpcionEnvios() != null) {
             this.currentDeliveryOption = foodTruck.getOpcionEnvios();
         }
-
     }
 
     @Override
     public void showSuccessMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        finish(); // Cerramos la pantalla tras borrar
+        finish();
     }
 
     @Override
@@ -146,14 +128,12 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // --- OTROS MÉTODOS ---
-
     private void showDeleteConfirmation() {
         new AlertDialog.Builder(this)
-                .setTitle("Borrar FoodTruck")
-                .setMessage("¿Estás seguro? Esta acción no se puede deshacer.")
-                .setPositiveButton("Sí, borrar", (dialog, which) -> presenter.deleteFoodTruck(foodTruckId))
-                .setNegativeButton("Cancelar", null)
+                .setTitle(R.string.dialog_delete_truck_title)
+                .setMessage(R.string.dialog_delete_truck_msg)
+                .setPositiveButton(R.string.btn_confirm_delete, (dialog, which) -> presenter.deleteFoodTruck(foodTruckId))
+                .setNegativeButton(R.string.btn_cancel, null)
                 .show();
     }
 

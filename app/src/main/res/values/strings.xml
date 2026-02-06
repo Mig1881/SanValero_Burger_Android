@@ -1,3 +1,82 @@
 <resources>
-    <string name="app_name">SV_burger_Android</string>
+    <string name="app_name">San Valero Burger Contest</string>
+
+    <string name="title_home">Inicio</string>
+    <string name="menu_burgers">Nuestras Burgers</string>
+    <string name="menu_foodtrucks">Food Trucks</string>
+
+    <string name="label_price">Precio</string>
+    <string name="label_ingredients">Ingredientes</string>
+    <string name="label_date">Fecha Alta</string>
+    <string name="label_vegan">Vegana 🌱</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_delete">Borrar</string>
+    <string name="dialog_delete_title">Eliminar Burger</string>
+    <string name="dialog_delete_msg">¿Estás seguro? No hay vuelta atrás.</string>
+    <string name="btn_confirm_delete">Sí, eliminar</string>
+    <string name="btn_cancel">Cancelar</string>
+
+    <string name="title_new_burger">Nueva Hamburguesa</string>
+    <string name="title_edit_burger">Editar Hamburguesa</string>
+    <string name="label_tap_photo">Toca para elegir foto</string>
+    <string name="label_name">Nombre</string>
+    <string name="hint_name">Ej: La Bestial</string>
+    <string name="hint_ingredients">Ej: Carne, queso, bacon...</string>
+    <string name="label_price_symbol">Precio (€)</string>
+    <string name="btn_save_burger">GUARDAR HAMBURGUESA</string>
+    <string name="btn_update_burger">ACTUALIZAR HAMBURGUESA</string>
+
+    <string name="btn_view_profile">VER PERFIL</string>
+
+    <string name="error_fill_fields">Por favor, rellena todos los campos</string>
+    <string name="error_invalid_price">El precio no es válido</string>
+    <string name="success_create">¡Hamburguesa creada con éxito! 🍔</string>
+    <string name="success_update">Hamburguesa actualizada correctamente ✨</string>
+    <string name="success_delete">Hamburguesa eliminada</string>
+    <string name="error_generic">Ha ocurrido un error</string>
+    <string name="error_network">Fallo de conexión</string>
+    <string name="title_detail_burger">Detalle Burger</string>
+    <string name="label_description">Descripción:</string>
+    <string name="label_contact">Contacto:</string>
+    <string name="desc_add_burger">Añadir Burger</string>
+    <string name="hint_food_truck_name">Nombre del FoodTruck</string>
+    <string name="hint_description">Descripción</string>
+    <string name="hint_phone">Teléfono</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_rating">Valoración (0-10)</string>
+    <string name="label_has_delivery">¿Tiene opción de envío?</string>
+    <string name="btn_save">GUARDAR</string>
+    <string name="placeholder_burger_name">Nombre Burger</string>
+    <string name="placeholder_truck_name">🚚 Nombre del Camión</string>
+    <string name="placeholder_ingredients">Ingredientes...</string>
+    <string name="placeholder_price">0.00 €</string>
+    <string name="placeholder_rating">⭐ 8.8</string>
+    <string name="placeholder_description_short">La mejor hamburguesa de la ciudad...</string>
+    <string name="placeholder_phone">📞 600 123 456</string>
+    <string name="fmt_price">%1$.2f €</string>
+    <string name="fmt_date">Fecha alta: %1$s</string>
+    <string name="title_food_truck_detail">Detalle Food Truck</string>
+    <string name="dialog_delete_truck_title">Borrar Food Truck</string>
+    <string name="dialog_delete_truck_msg">¿Estás seguro? Esta acción no se puede deshacer.</string>
+    <string name="phone_icon">📞</string>
+    <string name="email_icon">📧</string>
+    <string name="rating_icon">⭐</string>
+    <string name="action_add_truck">Añadir Food Truck</string>
+    <string name="action_view_burgers">Ver Hamburguesas</string>
+    <string name="error_missing_id">Error: Falta ID</string>
+    <string name="title_new_foodtruck">Nuevo Food Truck</string>
+    <string name="title_edit_foodtruck">Editar Food Truck</string>
+    <string name="btn_save_changes">GUARDAR CAMBIOS</string>
+    <string name="error_name_required">El nombre es obligatorio.</string>
+    <string name="error_desc_length">La descripción debe tener al menos 10 caracteres.</string>
+    <string name="fmt_phone_icon">📞 %1$s</string>
+    <string name="fmt_email_icon">📧 %1$s</string>
+    <string name="fmt_rating_icon">⭐ %1$.1f</string>
+    <string name="success_delete_truck">Food Truck eliminado correctamente</string>
+    <string name="error_save_code">Error al guardar: %1$d</string>
+    <string name="error_update_code">Error al actualizar: %1$d</string>
+    <string name="error_network_msg">Fallo de conexión: %1$s</string>
+    <string name="success_operation">Operación realizada con éxito</string>
+
+
 </resources>

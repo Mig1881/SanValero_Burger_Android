@@ -1,34 +1,35 @@
 package com.svalero.sv_burger_android.presenter;
 
+import android.content.Context;
+
+import com.svalero.sv_burger_android.R;
 import com.svalero.sv_burger_android.contract.BurgerDetailContract;
 import com.svalero.sv_burger_android.domain.Burger;
 import com.svalero.sv_burger_android.model.BurgerDetailModel;
 
 public class BurgerDetailPresenter implements BurgerDetailContract.Presenter,
-        BurgerDetailContract.Model.OnLoadBurgerListener, // Implementamos los listeners aquí
+        BurgerDetailContract.Model.OnLoadBurgerListener,
         BurgerDetailContract.Model.OnDeleteBurgerListener {
 
     private BurgerDetailContract.View view;
-    private BurgerDetailContract.Model model; // Referencia al modelo
+    private BurgerDetailContract.Model model;
+    private Context context;
 
-    public BurgerDetailPresenter(BurgerDetailContract.View view) {
+    public BurgerDetailPresenter(BurgerDetailContract.View view, Context context) {
         this.view = view;
-        this.model = new BurgerDetailModel(); // Inicializamos el modelo
+        this.context = context;
+        this.model = new BurgerDetailModel();
     }
-
-    // --- Métodos que llama la Vista ---
 
     @Override
     public void loadBurger(long id) {
-        model.loadBurger(id, this); // Le pasamos 'this' como listener
+        model.loadBurger(id, this);
     }
 
     @Override
     public void deleteBurger(long id) {
         model.deleteBurger(id, this);
     }
-
-    // --- Respuestas del Modelo (Callbacks) ---
 
     @Override
     public void onLoadSuccess(Burger burger) {
@@ -42,7 +43,9 @@ public class BurgerDetailPresenter implements BurgerDetailContract.Presenter,
 
     @Override
     public void onDeleteSuccess() {
-        view.showSuccessMessage("Hamburguesa eliminada 🗑️");
+        // --- CAMBIO: Obtenemos el mensaje traducido del strings.xml ---
+        String successMsg = context.getString(R.string.success_delete);
+        view.showSuccessMessage(successMsg);
     }
 
     @Override

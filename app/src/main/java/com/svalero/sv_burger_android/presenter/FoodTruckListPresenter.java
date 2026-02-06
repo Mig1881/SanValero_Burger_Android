@@ -3,6 +3,7 @@ package com.svalero.sv_burger_android.presenter;
 import com.svalero.sv_burger_android.contract.FoodTruckListContract;
 import com.svalero.sv_burger_android.domain.FoodTruck;
 import com.svalero.sv_burger_android.model.FoodTruckListModel;
+
 import java.util.List;
 
 public class FoodTruckListPresenter implements FoodTruckListContract.Presenter, FoodTruckListContract.Model.OnLoadFoodTrucksListener {

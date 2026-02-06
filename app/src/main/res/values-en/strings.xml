@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">San Valero Burger Contest</string>
+
+    <string name="title_home">Home</string>
+    <string name="menu_burgers">Our Burgers</string>
+    <string name="menu_foodtrucks">Food Trucks</string>
+
+    <string name="label_price">Price</string>
+    <string name="label_ingredients">Ingredients</string>
+    <string name="label_date">Created on</string>
+    <string name="label_vegan">Vegan 🌱</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_delete">Delete</string>
+    <string name="dialog_delete_title">Delete Burger</string>
+    <string name="dialog_delete_msg">Are you sure? This cannot be undone.</string>
+    <string name="btn_confirm_delete">Yes, delete</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <string name="title_new_burger">New Burger</string>
+    <string name="title_edit_burger">Edit Burger</string>
+    <string name="label_tap_photo">Tap to choose photo</string>
+    <string name="label_name">Name</string>
+    <string name="hint_name">Ex: The Beast</string>
+    <string name="hint_ingredients">Ex: Meat, cheese, bacon...</string>
+    <string name="label_price_symbol">Price (€)</string>
+    <string name="btn_save_burger">SAVE BURGER</string>
+    <string name="btn_update_burger">UPDATE BURGER</string>
+
+    <string name="btn_view_profile">VIEW PROFILE</string>
+
+    <string name="error_fill_fields">Please fill in all fields</string>
+    <string name="error_invalid_price">Invalid price</string>
+    <string name="success_create">Burger created successfully! 🍔</string>
+    <string name="success_update">Burger updated correctly ✨</string>
+    <string name="success_delete">Burger deleted</string>
+    <string name="error_generic">An error occurred</string>
+    <string name="error_network">Connection failure</string>
+    <string name="title_detail_burger">Burger Detail</string>
+    <string name="label_description">Description:</string>
+    <string name="label_contact">Contact:</string>
+    <string name="desc_add_burger">Add Burger</string>
+    <string name="hint_food_truck_name">Food Truck Name</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_rating">Rating (0-10)</string>
+    <string name="label_has_delivery">Delivery available?</string>
+    <string name="btn_save">SAVE</string>
+    <string name="placeholder_burger_name">Burger Name</string>
+    <string name="placeholder_truck_name">🚚 Truck Name</string>
+    <string name="placeholder_ingredients">Ingredients...</string>
+    <string name="placeholder_price">€ 0.00</string>
+    <string name="placeholder_rating">⭐ 8.8</string>
+    <string name="placeholder_description_short">Best burger in town...</string>
+    <string name="placeholder_phone">📞 600 123 456</string>
+    <string name="fmt_price">€%1$.2f</string>
+    <string name="fmt_date">Created on: %1$s</string>
+    <string name="title_food_truck_detail">Food Truck Detail</string>
+    <string name="dialog_delete_truck_title">Delete Food Truck</string>
+    <string name="dialog_delete_truck_msg">Are you sure? This action cannot be undone.</string>
+    <string name="phone_icon">📞</string>
+    <string name="email_icon">📧</string>
+    <string name="rating_icon">⭐</string>
+    <string name="action_add_truck">Add Food Truck</string>
+    <string name="action_view_burgers">View Burgers</string>
+    <string name="error_missing_id">Error: Missing ID</string>
+    <string name="title_new_foodtruck">New Food Truck</string>
+    <string name="title_edit_foodtruck">Edit Food Truck</string>
+    <string name="btn_save_changes">SAVE CHANGES</string>
+    <string name="error_name_required">Name is required.</string>
+    <string name="error_desc_length">Description must be at least 10 characters long.</string>
+    <string name="fmt_phone_icon">📞 %1$s</string>
+    <string name="fmt_email_icon">📧 %1$s</string>
+    <string name="fmt_rating_icon">⭐ %1$.1f</string>
+    <string name="success_delete_truck">Food Truck deleted successfully</string>
+    <string name="error_save_code">Error saving: %1$d</string>
+    <string name="error_update_code">Error updating: %1$d</string>
+    <string name="error_network_msg">Connection failure: %1$s</string>
+    <string name="success_operation">Operation completed successfully</string>
+
+
+</resources>
