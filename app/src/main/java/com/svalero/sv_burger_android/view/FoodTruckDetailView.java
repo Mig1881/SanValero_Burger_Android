@@ -64,30 +64,29 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
 
         Button btnEdit = findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(v -> {
-            Toast.makeText(this, "Próximamente: Lista de Hamburguesas", Toast.LENGTH_SHORT).show();
-//            Intent editIntent = new Intent(this, RegisterFoodTruckView.class);
-//            editIntent.putExtra("id", foodTruckId);
-//
-//
-//            editIntent.putExtra("name", tvName.getText().toString());
-//            editIntent.putExtra("description", tvDescription.getText().toString());
-//
-//            String phoneClean = tvPhone.getText().toString().replace("📞 ", "");
-//            String emailClean = tvEmail.getText().toString().replace("📧 ", "");
-//            String ratingClean = tvRating.getText().toString().replace("⭐ ", "");
-//
-//            editIntent.putExtra("phone", phoneClean);
-//            editIntent.putExtra("email", emailClean);
-//
-//            try {
-//                editIntent.putExtra("rating", Float.parseFloat(ratingClean));
-//            } catch (NumberFormatException | NullPointerException e) {
-//                editIntent.putExtra("rating", 0f);
-//            }
-//
-//            editIntent.putExtra("opcionEnvios", currentDeliveryOption);
-//
-//            startActivity(editIntent);
+            Intent editIntent = new Intent(this, RegisterFoodTruckView.class);
+            editIntent.putExtra("id", foodTruckId);
+
+
+            editIntent.putExtra("name", tvName.getText().toString());
+            editIntent.putExtra("description", tvDescription.getText().toString());
+
+            String phoneClean = tvPhone.getText().toString().replace("📞 ", "");
+            String emailClean = tvEmail.getText().toString().replace("📧 ", "");
+            String ratingClean = tvRating.getText().toString().replace("⭐ ", "");
+
+            editIntent.putExtra("phone", phoneClean);
+            editIntent.putExtra("email", emailClean);
+
+            try {
+                editIntent.putExtra("rating", Float.parseFloat(ratingClean));
+            } catch (NumberFormatException | NullPointerException e) {
+                editIntent.putExtra("rating", 0f);
+            }
+
+            editIntent.putExtra("opcionEnvios", currentDeliveryOption);
+
+            startActivity(editIntent);
         });
     }
 

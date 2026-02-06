@@ -18,7 +18,8 @@
         <activity
             android:name=".view.FoodTruckDetailView"
             android:exported="false" />
-
+        <activity android:name=".view.RegisterFoodTruckView"
+            android:exported="false" />
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
