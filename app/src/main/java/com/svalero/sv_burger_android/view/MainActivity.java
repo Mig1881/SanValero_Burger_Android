@@ -64,11 +64,9 @@ public class MainActivity extends AppCompatActivity implements FoodTruckListCont
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_add_foodtruck) {
-            Toast.makeText(this, "Próximamente: Burgers", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, RegisterFoodTruckView.class);
+            startActivity(intent);
             return true;
-//            Intent intent = new Intent(this, RegisterFoodTruckView.class);
-//            startActivity(intent);
-//            return true;
         } else if (item.getItemId() == R.id.action_burgers) {
             Toast.makeText(this, "Próximamente: Burgers", Toast.LENGTH_SHORT).show();
             return true;
