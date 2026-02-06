@@ -20,6 +20,9 @@
             android:exported="false" />
         <activity android:name=".view.RegisterFoodTruckView"
             android:exported="false" />
+        <activity android:name=".view.BurgerListView"
+            android:label="Nuestras Burgers"
+            android:exported="false"/>
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
