@@ -1,5 +1,7 @@
 package com.svalero.sv_burger_android.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.svalero.sv_burger_android.R;
 import com.svalero.sv_burger_android.domain.Burger;
+import com.svalero.sv_burger_android.view.BurgerDetailView;
 
 import java.util.List;
 
@@ -32,27 +35,38 @@ public class BurgerAdapter extends RecyclerView.Adapter<BurgerAdapter.BurgerView
 
     @Override
     public void onBindViewHolder(@NonNull BurgerViewHolder holder, int position) {
+        // 1. Recuperamos la hamburguesa de esta posición
         Burger burger = burgerList.get(position);
+
+        // 2. Pintamos los datos
         holder.tvName.setText(burger.getNombre());
         holder.tvIngredients.setText(burger.getIngredientes());
-        holder.tvPrice.setText(burger.getPrecio() + " €");
 
-        // --- ARREGLO PARA GLIDE ---
+        // Formateamos el precio para que quede bonito
+        String precioFormateado = String.format("%.2f €", burger.getPrecio());
+        holder.tvPrice.setText(precioFormateado);
+
+        // 3. Lógica de la imagen (mantengo la tuya que está perfecta)
         String imageUrl = burger.getImagenURL();
-
-        // Si la URL viene incompleta (sin http), se lo ponemos nosotros
         if (imageUrl != null && !imageUrl.startsWith("http")) {
-            // Añadimos la IP del emulador (10.0.2.2) o la IP de tu PC si usas móvil real
-            // IMPORTANTE: Asegúrate de que el puerto (8080) es el correcto de tu Spring Boot
             imageUrl = "http://10.0.2.2:8080" + imageUrl;
         }
 
-        // Ahora 'imageUrl' ya es una dirección completa de internet
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
                 .placeholder(R.drawable.ic_burger)
                 .error(R.drawable.ic_burger)
                 .into(holder.ivImage);
+
+        // --- 4. NUEVO: CLICK PARA IR AL DETALLE ---
+        holder.itemView.setOnClickListener(v -> {
+            // Obtenemos el contexto desde la vista para poder lanzar el Intent
+            Context context = holder.itemView.getContext();
+
+            Intent intent = new Intent(context, BurgerDetailView.class);
+            intent.putExtra("burger_id", burger.getId()); // ¡Pasamos el ID clave!
+            context.startActivity(intent);
+        });
     }
 
     @Override

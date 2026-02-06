@@ -25,6 +25,8 @@
             android:exported="false"/>
         <activity android:name=".view.RegisterBurgerView"
             android:exported="false" />
+        <activity android:name=".view.BurgerDetailView"
+            android:exported="false" />
         <activity
             android:name=".view.MainActivity"
             android:exported="true">

@@ -7,8 +7,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface BurgerApiInterface {
 
@@ -16,5 +18,10 @@ public interface BurgerApiInterface {
     Call<List<Burger>> getBurgers();
     @POST("burgers")
     Call<Burger> addBurger(@Body BurgerInDto burger);
+    @GET("burgers/{id}")
+    Call<Burger> getBurgerDetail(@Path("id") long id);
+
+    @DELETE("burgers/{id}")
+    Call<Void> deleteBurger(@Path("id") long id);
 
 }
