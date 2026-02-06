@@ -9,6 +9,7 @@ public class FoodTruck {
     private String descripcion;
     private Boolean opcionEnvios;
     private Float valoracion;
+    private String fechaInscripcion;
 
     public FoodTruck() {}
 
@@ -32,4 +33,6 @@ public class FoodTruck {
 
     public Float getValoracion() { return valoracion; }
     public void setValoracion(Float valoracion) { this.valoracion = valoracion; }
+    public String getFechaInscripcion() { return fechaInscripcion; }
+    public void setFechaInscripcion(String fechaInscripcion) { this.fechaInscripcion = fechaInscripcion; }
 }
