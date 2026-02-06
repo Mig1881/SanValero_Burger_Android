@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.svalero.sv_burger_android.R;
 import com.svalero.sv_burger_android.contract.FoodTruckDetailContract;
 import com.svalero.sv_burger_android.domain.FoodTruck;
@@ -22,12 +23,15 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
     private FoodTruckDetailPresenter presenter;
     private long foodTruckId;
 
+    // Declaramos los TextViews aquí arriba para poder usarlos en todo el archivo
     private TextView tvName;
     private TextView tvDescription;
     private TextView tvPhone;
     private TextView tvEmail;
     private TextView tvRating;
     private boolean currentDeliveryOption = false;
+    private FloatingActionButton fabAddBurger;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,30 +48,33 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
 
         presenter = new FoodTruckDetailPresenter(this);
 
+        // 2. Recoger ID del Intent
         Intent intent = getIntent();
-        foodTruckId = intent.getLongExtra("id", 0);
+        foodTruckId = intent.getLongExtra("id", 0); // ¡ESTE DATO ES CLAVE!
 
+        // 3. Inicializar las Vistas
         tvName = findViewById(R.id.tvDetailName);
         tvDescription = findViewById(R.id.tvDetailDescription);
         tvPhone = findViewById(R.id.tvDetailPhone);
         tvEmail = findViewById(R.id.tvDetailEmail);
         tvRating = findViewById(R.id.tvDetailRating);
 
+        // 4. Pintar datos iniciales
         tvName.setText(intent.getStringExtra("name"));
         tvDescription.setText(intent.getStringExtra("description"));
         tvPhone.setText("📞 " + intent.getStringExtra("phone"));
         tvEmail.setText("📧 " + intent.getStringExtra("email"));
         tvRating.setText("⭐ " + intent.getFloatExtra("rating", 0));
 
+        // 5. Botón Borrar
         Button btnDelete = findViewById(R.id.btnDelete);
         btnDelete.setOnClickListener(v -> showDeleteConfirmation());
 
+        // 6. Botón Editar
         Button btnEdit = findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(v -> {
             Intent editIntent = new Intent(this, RegisterFoodTruckView.class);
             editIntent.putExtra("id", foodTruckId);
-
-
             editIntent.putExtra("name", tvName.getText().toString());
             editIntent.putExtra("description", tvDescription.getText().toString());
 
@@ -85,21 +92,33 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
             }
 
             editIntent.putExtra("opcionEnvios", currentDeliveryOption);
-
             startActivity(editIntent);
+        });
+
+        fabAddBurger = findViewById(R.id.fabAddBurger);
+        fabAddBurger.setOnClickListener(v -> {
+            // Saltamos a la pantalla de crear Burger
+            Intent addBurgerIntent = new Intent(FoodTruckDetailView.this, RegisterBurgerView.class);
+            // ¡IMPORTANTE! Nos llevamos el ID del Food Truck para saber "quién es el padre"
+            addBurgerIntent.putExtra("food_truck_id", foodTruckId);
+            startActivity(addBurgerIntent);
         });
     }
 
+    // --- MÉTODOS DEL CICLO DE VIDA ---
 
     @Override
     protected void onResume() {
         super.onResume();
+        // ESTA ES LA CLAVE: Al volver de editar, pedimos los datos nuevos
         presenter.loadFoodTruck(foodTruckId);
     }
 
+    // --- MÉTODOS DEL CONTRATO (View) ---
 
     @Override
     public void showFoodTruck(FoodTruck foodTruck) {
+        // Aquí actualizamos la pantalla con lo que viene fresco de la API
         tvName.setText(foodTruck.getNombre());
         tvDescription.setText(foodTruck.getDescripcion());
         tvPhone.setText("📞 " + foodTruck.getTelefono());
@@ -119,7 +138,7 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
     @Override
     public void showSuccessMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        finish();
+        finish(); // Cerramos la pantalla tras borrar
     }
 
     @Override
@@ -127,6 +146,7 @@ public class FoodTruckDetailView extends AppCompatActivity implements FoodTruckD
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    // --- OTROS MÉTODOS ---
 
     private void showDeleteConfirmation() {
         new AlertDialog.Builder(this)
