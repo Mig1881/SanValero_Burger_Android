@@ -12,5 +12,7 @@ public interface RegisterBurgerContract {
 
     interface Presenter {
         void addBurger(String name, String ingredients, String price, boolean isVegan, long foodTruckId, Uri imageUri, Context context);
+
+        void editBurger(long burgerId, String name, String ingredients, String price, boolean isVegan, Uri imageUri, Context context);
     }
 }

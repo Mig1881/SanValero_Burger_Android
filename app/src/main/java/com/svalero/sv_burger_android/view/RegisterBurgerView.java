@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -17,20 +18,21 @@ import com.svalero.sv_burger_android.R;
 import com.svalero.sv_burger_android.contract.RegisterBurgerContract;
 import com.svalero.sv_burger_android.presenter.RegisterBurgerPresenter;
 
-
 public class RegisterBurgerView extends AppCompatActivity implements RegisterBurgerContract.View {
 
     private ImageView ivBurgerPreview;
-    private EditText etName;
-    private EditText etIngredients;
-    private EditText etPrice;
+    private EditText etName, etIngredients, etPrice;
     private CheckBox cbVegan;
     private Button btnSave;
-
-    private long foodTruckId;
-    private Uri selectedImageUri;
+    private TextView tvTitle;
 
     private RegisterBurgerContract.Presenter presenter;
+    private Uri selectedImageUri;
+
+    // Variables para controlar el modo
+    private boolean isEditMode = false;
+    private long burgerIdToEdit = -1;
+    private long foodTruckId = -1;
 
     private final ActivityResultLauncher<String> pickImageLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
@@ -40,10 +42,7 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
                     ivBurgerPreview.setColorFilter(null);
                     ivBurgerPreview.setPadding(0, 0, 0, 0);
                     ivBurgerPreview.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    Glide.with(this)
-                            .load(uri)
-                            .centerCrop()
-                            .into(ivBurgerPreview);
+                    Glide.with(this).load(uri).centerCrop().into(ivBurgerPreview);
                 }
             });
 
@@ -53,16 +52,56 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
         setContentView(R.layout.activity_register_burger);
 
         presenter = new RegisterBurgerPresenter(this);
+        initViews();
 
-        // Recoger ID del FoodTruck
-        foodTruckId = getIntent().getLongExtra("food_truck_id", -1);
-        if (foodTruckId == -1) {
-            Toast.makeText(this, "Error: No se ha detectado el FoodTruck", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
+        //COMPROBAR MODO: ¿Crear o a Editar?
+        burgerIdToEdit = getIntent().getLongExtra("edit_burger_id", -1);
+
+        if (burgerIdToEdit != -1) {
+            // --- MODO EDICIÓN ---
+            isEditMode = true;
+            setupEditMode();
+        } else {
+            // --- MODO CREACIÓN ---
+            isEditMode = false;
+            foodTruckId = getIntent().getLongExtra("food_truck_id", -1);
+            if (foodTruckId == -1) {
+                Toast.makeText(this, "Error: Falta ID", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
 
+        // 2. CONFIGURAR BOTÓN
+        btnSave.setOnClickListener(v -> {
+            if (isEditMode) {
+                // LLAMAR A EDITAR
+                presenter.editBurger(
+                        burgerIdToEdit,
+                        etName.getText().toString(),
+                        etIngredients.getText().toString(),
+                        etPrice.getText().toString(),
+                        cbVegan.isChecked(),
+                        selectedImageUri,
+                        this
+                );
+            } else {
+                // LLAMAR A CREAR
+                presenter.addBurger(
+                        etName.getText().toString(),
+                        etIngredients.getText().toString(),
+                        etPrice.getText().toString(),
+                        cbVegan.isChecked(),
+                        foodTruckId,
+                        selectedImageUri,
+                        this
+                );
+            }
+        });
 
+        ivBurgerPreview.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
+    }
+
+    private void initViews() {
         ivBurgerPreview = findViewById(R.id.ivBurgerPreview);
         etName = findViewById(R.id.etBurgerName);
         etIngredients = findViewById(R.id.etBurgerIngredients);
@@ -70,23 +109,39 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
         cbVegan = findViewById(R.id.cbVegan);
         btnSave = findViewById(R.id.btnSaveBurger);
 
-        btnSave.setOnClickListener(v -> {
-            presenter.addBurger(
-                    etName.getText().toString(),
-                    etIngredients.getText().toString(),
-                    etPrice.getText().toString(),
-                    cbVegan.isChecked(),
-                    foodTruckId,
-                    selectedImageUri,
-                    this
-            );
-        });
-
-        ivBurgerPreview.setOnClickListener(v -> {
-            pickImageLauncher.launch("image/*");
-        });
     }
 
+    private void setupEditMode() {
+
+        btnSave.setText("ACTUALIZAR HAMBURGUESA");
+
+        String name = getIntent().getStringExtra("edit_name");
+        String ingredients = getIntent().getStringExtra("edit_ingredients");
+        float price = getIntent().getFloatExtra("edit_price", 0);
+        boolean vegan = getIntent().getBooleanExtra("edit_vegan", false);
+        String currentImageUrl = getIntent().getStringExtra("edit_image_url");
+
+        etName.setText(name);
+        etIngredients.setText(ingredients);
+        etPrice.setText(String.valueOf(price));
+        cbVegan.setChecked(vegan);
+
+        // Carga la imagen antigua para que el usuario sepa cuál hay
+        if (currentImageUrl != null && !currentImageUrl.isEmpty()) {
+            String fullUrl = "http://10.0.2.2:8080" + currentImageUrl;
+
+            ivBurgerPreview.setImageTintList(null);
+            ivBurgerPreview.setColorFilter(null);
+            ivBurgerPreview.setPadding(0, 0, 0, 0);
+            ivBurgerPreview.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            Glide.with(this)
+                    .load(fullUrl)
+                    .diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(ivBurgerPreview);
+        }
+    }
 
     @Override
     public void showSuccess(String message) {

@@ -54,6 +54,8 @@ public class BurgerAdapter extends RecyclerView.Adapter<BurgerAdapter.BurgerView
 
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
+                .diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .placeholder(R.drawable.ic_burger)
                 .error(R.drawable.ic_burger)
                 .into(holder.ivImage);

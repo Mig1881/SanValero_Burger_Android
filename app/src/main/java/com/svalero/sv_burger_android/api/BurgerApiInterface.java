@@ -2,6 +2,7 @@ package com.svalero.sv_burger_android.api;
 
 import com.svalero.sv_burger_android.domain.Burger;
 import com.svalero.sv_burger_android.domain.BurgerInDto;
+import com.svalero.sv_burger_android.domain.BurgerUpdateDto;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface BurgerApiInterface {
@@ -20,8 +22,9 @@ public interface BurgerApiInterface {
     Call<Burger> addBurger(@Body BurgerInDto burger);
     @GET("burgers/{id}")
     Call<Burger> getBurgerDetail(@Path("id") long id);
-
     @DELETE("burgers/{id}")
     Call<Void> deleteBurger(@Path("id") long id);
+    @PUT("burgers/{id}")
+    Call<Burger> updateBurger(@Path("id") long id, @Body BurgerUpdateDto burger);
 
 }
