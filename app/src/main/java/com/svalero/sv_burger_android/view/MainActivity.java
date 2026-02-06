@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements FoodTruckListCont
 
         adapter = new FoodTruckAdapter(foodTruckList);
         recyclerView.setAdapter(adapter);
-
     }
 
     @Override

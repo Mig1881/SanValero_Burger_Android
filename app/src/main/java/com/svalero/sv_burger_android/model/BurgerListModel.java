@@ -15,7 +15,6 @@ public class BurgerListModel implements BurgerListContract.Model {
 
     @Override
     public void loadBurgers(OnLoadBurgersListener listener) {
-        // CAMBIO AQUÍ: Usamos BurgerApi en vez de FoodTruckApi
         BurgerApiInterface api = BurgerApi.buildInstance();
         Call<List<Burger>> call = api.getBurgers();
 
