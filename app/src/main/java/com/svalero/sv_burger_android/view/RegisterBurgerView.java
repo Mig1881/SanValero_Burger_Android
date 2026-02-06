@@ -108,12 +108,16 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
         etPrice = findViewById(R.id.etBurgerPrice);
         cbVegan = findViewById(R.id.cbVegan);
         btnSave = findViewById(R.id.btnSaveBurger);
+        tvTitle = findViewById(R.id.tvScreenTitle);
 
     }
 
     private void setupEditMode() {
 
         btnSave.setText("ACTUALIZAR HAMBURGUESA");
+        if (tvTitle != null) {
+            tvTitle.setText("Editar Hamburguesa");
+        }
 
         String name = getIntent().getStringExtra("edit_name");
         String ingredients = getIntent().getStringExtra("edit_ingredients");

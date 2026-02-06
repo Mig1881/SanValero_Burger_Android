@@ -34,7 +34,10 @@ public class MainActivity extends AppCompatActivity implements FoodTruckListCont
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         presenter = new FoodTruckListPresenter(this);
         foodTruckList = new ArrayList<>();
 
@@ -44,14 +47,11 @@ public class MainActivity extends AppCompatActivity implements FoodTruckListCont
         adapter = new FoodTruckAdapter(foodTruckList);
         recyclerView.setAdapter(adapter);
 
-        // BORRADO: No llamamos a loadFoodTrucks() aquí.
-        // Ya se llamará automáticamente en onResume() al iniciar.
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Esto se ejecuta al iniciar la app Y al volver de Detalle/Registro
         presenter.loadFoodTrucks();
     }
 
@@ -77,10 +77,8 @@ public class MainActivity extends AppCompatActivity implements FoodTruckListCont
 
     @Override
     public void showFoodTrucks(List<FoodTruck> foodTrucks) {
-        // Limpiamos la lista vieja y metemos la nueva
         foodTruckList.clear();
         foodTruckList.addAll(foodTrucks);
-        // Avisamos al adaptador de que los datos han cambiado
         adapter.notifyDataSetChanged();
     }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,25 +40,33 @@ public class FoodTruckAdapter extends RecyclerView.Adapter<FoodTruckAdapter.Food
         holder.tvDescription.setText(truck.getDescripcion());
         holder.tvPhone.setText("📞 " + truck.getTelefono());
 
-        // Formateamos la valoración (ej: 8.5)
         if (truck.getValoracion() != null) {
             holder.tvRating.setText("⭐ " + truck.getValoracion());
         } else {
             holder.tvRating.setText("⭐ -");
         }
-        // CLIC EN LA TARJETA
-        holder.itemView.setOnClickListener(v -> {
+
+        // --- LÓGICA DE NAVEGACIÓN ---
+        // La definimos una vez para usarla en dos sitios
+        View.OnClickListener irAlDetalle = v -> {
             Intent intent = new Intent(v.getContext(), com.svalero.sv_burger_android.view.FoodTruckDetailView.class);
+            // Pasamos todos los datos (Tal cual lo tenías tú)
             intent.putExtra("id", truck.getId());
             intent.putExtra("name", truck.getNombre());
             intent.putExtra("description", truck.getDescripcion());
             intent.putExtra("phone", truck.getTelefono());
             intent.putExtra("email", truck.getEmail());
-            // Ojo con los nulls en floats
             intent.putExtra("rating", truck.getValoracion() != null ? truck.getValoracion() : 0f);
 
             v.getContext().startActivity(intent);
-        });
+        };
+
+        // 1. Asignar clic a la TARJETA entera
+        holder.itemView.setOnClickListener(irAlDetalle);
+
+        // 2. Asignar clic al BOTÓN "Ver Perfil"
+        // (Asegúrate que en el XML item_food_truck el botón tiene id: btnViewProfile)
+        holder.btnViewProfile.setOnClickListener(irAlDetalle);
     }
 
     @Override
@@ -67,6 +76,7 @@ public class FoodTruckAdapter extends RecyclerView.Adapter<FoodTruckAdapter.Food
 
     public static class FoodTruckViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvDescription, tvPhone, tvRating;
+        Button btnViewProfile; // <--- Declaramos el botón
 
         public FoodTruckViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +84,9 @@ public class FoodTruckAdapter extends RecyclerView.Adapter<FoodTruckAdapter.Food
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvPhone = itemView.findViewById(R.id.tvPhone);
             tvRating = itemView.findViewById(R.id.tvRating);
+
+            // Localizamos el botón en el diseño
+            btnViewProfile = itemView.findViewById(R.id.btnViewProfile);
         }
     }
 }
