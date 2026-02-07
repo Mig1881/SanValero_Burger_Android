@@ -25,12 +25,11 @@ public class BurgerListView extends AppCompatActivity implements BurgerListContr
     private BurgerListPresenter presenter;
     private BurgerAdapter adapter;
     private List<Burger> burgerList;
-    private CheckBox cbFilterVegan; // Referencia al checkbox
+    private CheckBox cbFilterVegan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // IMPORTANTE: Cambia al nuevo layout que creamos en el paso 1
         setContentView(R.layout.activity_burger_list);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -43,21 +42,15 @@ public class BurgerListView extends AppCompatActivity implements BurgerListContr
         presenter = new BurgerListPresenter(this);
         burgerList = new ArrayList<>();
 
-        // Inicializamos el CheckBox
         cbFilterVegan = findViewById(R.id.cbFilterVegan);
 
-        // OJO: Cambia el ID del RecyclerView al que pusimos en activity_burger_list.xml (rvBurgers)
-        // Antes usabas rvFoodTrucks, que es confuso para una lista de burgers
         RecyclerView recyclerView = findViewById(R.id.rvBurgers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new BurgerAdapter(burgerList);
         recyclerView.setAdapter(adapter);
 
-        // --- LISTENER DEL CHECKBOX ---
         cbFilterVegan.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Si está marcado (true) -> enviamos true
-            // Si NO está marcado (false) -> enviamos null (para que la API devuelva todo)
             Boolean filter = isChecked ? true : null;
             presenter.loadBurgers(filter);
         });
@@ -66,7 +59,6 @@ public class BurgerListView extends AppCompatActivity implements BurgerListContr
     @Override
     protected void onResume() {
         super.onResume();
-        // Cargamos según el estado actual del checkbox
         Boolean filter = cbFilterVegan.isChecked() ? true : null;
         presenter.loadBurgers(filter);
     }

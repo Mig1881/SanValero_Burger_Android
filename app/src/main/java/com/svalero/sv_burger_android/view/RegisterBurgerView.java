@@ -2,6 +2,7 @@ package com.svalero.sv_burger_android.view;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem; // <--- IMPORTANTE
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,7 +12,9 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull; // <--- IMPORTANTE
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar; // <--- IMPORTANTE
 
 import com.bumptech.glide.Glide;
 import com.svalero.sv_burger_android.R;
@@ -50,7 +53,15 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_burger);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
         presenter = new RegisterBurgerPresenter(this);
+
         initViews();
 
         burgerIdToEdit = getIntent().getLongExtra("edit_burger_id", -1);
@@ -68,6 +79,7 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
         }
 
         btnSave.setOnClickListener(v -> {
+
             if (isEditMode) {
                 presenter.editBurger(
                         burgerIdToEdit,
@@ -76,7 +88,7 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
                         etPrice.getText().toString(),
                         cbVegan.isChecked(),
                         selectedImageUri,
-                        this
+                        this // Context
                 );
             } else {
                 presenter.addBurger(
@@ -86,12 +98,21 @@ public class RegisterBurgerView extends AppCompatActivity implements RegisterBur
                         cbVegan.isChecked(),
                         foodTruckId,
                         selectedImageUri,
-                        this
+                        this // Context
                 );
             }
         });
 
         ivBurgerPreview.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initViews() {
