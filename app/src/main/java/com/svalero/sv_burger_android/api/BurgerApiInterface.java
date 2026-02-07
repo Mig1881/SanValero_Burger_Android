@@ -13,11 +13,14 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface BurgerApiInterface {
 
+//    @GET("burgers")
+//    Call<List<Burger>> getBurgers();
     @GET("burgers")
-    Call<List<Burger>> getBurgers();
+    Call<List<Burger>> getBurgers(@Query("opcionVegana") Boolean isVegan);
     @POST("burgers")
     Call<Burger> addBurger(@Body BurgerInDto burger);
     @GET("burgers/{id}")

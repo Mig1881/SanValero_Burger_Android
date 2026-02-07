@@ -2,6 +2,7 @@ package com.svalero.sv_burger_android.view;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.CheckBox; // Importar CheckBox
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,37 +25,50 @@ public class BurgerListView extends AppCompatActivity implements BurgerListContr
     private BurgerListPresenter presenter;
     private BurgerAdapter adapter;
     private List<Burger> burgerList;
+    private CheckBox cbFilterVegan; // Referencia al checkbox
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        // IMPORTANTE: Cambia al nuevo layout que creamos en el paso 1
+        setContentView(R.layout.activity_burger_list);
 
-        // 1. Configurar Toolbar con flecha atrás
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            // USAMOS EL RECURSO DE CADENA PARA EL TÍTULO
             getSupportActionBar().setTitle(R.string.menu_burgers);
         }
 
-        // 2. Inicializar Presenter y Lista
         presenter = new BurgerListPresenter(this);
         burgerList = new ArrayList<>();
 
-        // 3. Configurar RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvFoodTrucks);
+        // Inicializamos el CheckBox
+        cbFilterVegan = findViewById(R.id.cbFilterVegan);
+
+        // OJO: Cambia el ID del RecyclerView al que pusimos en activity_burger_list.xml (rvBurgers)
+        // Antes usabas rvFoodTrucks, que es confuso para una lista de burgers
+        RecyclerView recyclerView = findViewById(R.id.rvBurgers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new BurgerAdapter(burgerList);
         recyclerView.setAdapter(adapter);
+
+        // --- LISTENER DEL CHECKBOX ---
+        cbFilterVegan.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // Si está marcado (true) -> enviamos true
+            // Si NO está marcado (false) -> enviamos null (para que la API devuelva todo)
+            Boolean filter = isChecked ? true : null;
+            presenter.loadBurgers(filter);
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.loadBurgers();
+        // Cargamos según el estado actual del checkbox
+        Boolean filter = cbFilterVegan.isChecked() ? true : null;
+        presenter.loadBurgers(filter);
     }
 
     @Override
