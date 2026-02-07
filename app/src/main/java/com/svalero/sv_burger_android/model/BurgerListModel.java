@@ -13,24 +13,29 @@ import retrofit2.Response;
 
 public class BurgerListModel implements BurgerListContract.Model {
 
+    private BurgerApiInterface api;
+
+    public BurgerListModel() {
+        api = BurgerApi.buildInstance();
+    }
+
     @Override
-    public void loadBurgers(OnLoadBurgersListener listener) {
-        BurgerApiInterface api = BurgerApi.buildInstance();
-        Call<List<Burger>> call = api.getBurgers();
+    public void loadBurgers(Boolean isVegan, OnLoadBurgersListener listener) {
+        Call<List<Burger>> call = api.getBurgers(isVegan);
 
         call.enqueue(new Callback<List<Burger>>() {
             @Override
             public void onResponse(Call<List<Burger>> call, Response<List<Burger>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful()) {
                     listener.onSuccess(response.body());
                 } else {
-                    listener.onError("Error cargando burgers");
+                    listener.onError("Error al cargar burgers");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Burger>> call, Throwable t) {
-                listener.onError("Error de conexión");
+                listener.onError("Error de red: " + t.getMessage());
             }
         });
     }

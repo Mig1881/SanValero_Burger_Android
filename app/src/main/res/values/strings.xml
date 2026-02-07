@@ -77,6 +77,7 @@
     <string name="error_update_code">Error al actualizar: %1$d</string>
     <string name="error_network_msg">Fallo de conexión: %1$s</string>
     <string name="success_operation">Operación realizada con éxito</string>
+    <string name="filter_vegan_only">Solo Veganas 🌱</string>
 
 
 </resources>
